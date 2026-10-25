@@ -1,5 +1,6 @@
 import { BrowserRouter, Link } from "react-router-dom";
 
+import { UniversalLoader } from "./components/common/UniversalLoader";
 import { WebsiteRoutes } from "./routes/WebsiteRoutes";
 
 function SiteLayout() {
@@ -24,6 +25,7 @@ function SiteLayout() {
       </header>
 
       <WebsiteRoutes />
+      <UniversalLoader />
     </div>
   );
 }
