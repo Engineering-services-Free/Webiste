@@ -1,0 +1,2 @@
+export const PUBLIC_LIST_STALE_TIME = 5 * 60 * 1000;
+export const PUBLIC_CONTENT_STALE_TIME = 10 * 60 * 1000;
