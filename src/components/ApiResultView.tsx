@@ -1,6 +1,6 @@
-import axios from "axios";
-
 import { HtmlContent } from "./common/HtmlContent";
+import { UniversalError } from "./common/UniversalError";
+import { getUniversalErrorType } from "./common/universalError.utils";
 
 interface ApiResultViewProps {
   title: string;
@@ -8,6 +8,9 @@ interface ApiResultViewProps {
   isLoading: boolean;
   error: unknown;
   isEmpty?: boolean;
+  isNotFound?: boolean;
+  hasData?: boolean;
+  onRetry?: () => void;
 }
 
 function DataContent({ value }: { value: unknown }) {
@@ -59,18 +62,31 @@ function DataContent({ value }: { value: unknown }) {
   );
 }
 
-function getErrorStatus(error: unknown): number | undefined {
-  return axios.isAxiosError(error) ? error.response?.status : undefined;
-}
-
 export function ApiResultView({
   title,
   data,
   isLoading,
   error,
   isEmpty = false,
+  isNotFound = false,
+  hasData = data !== undefined,
+  onRetry,
 }: ApiResultViewProps) {
-  const errorStatus = getErrorStatus(error);
+  const hasBlockingError =
+    error !== null && error !== undefined && !hasData;
+
+  if (!isLoading && isNotFound) {
+    return <UniversalError type="not-found" onRetry={onRetry} />;
+  }
+
+  if (!isLoading && hasBlockingError) {
+    return (
+      <UniversalError
+        type={getUniversalErrorType(error)}
+        onRetry={onRetry}
+      />
+    );
+  }
 
   return (
     <main className="mx-auto w-full max-w-6xl space-y-6 px-6 py-10">
@@ -82,29 +98,13 @@ export function ApiResultView({
         </p>
       )}
 
-      {!isLoading && error !== null && error !== undefined && (
-        <section
-          role="alert"
-          className="rounded-lg border border-destructive/30 bg-destructive/10 p-5 text-destructive"
-        >
-          <h2 className="font-semibold">
-            {errorStatus === 404 ? "Record not found" : "Unable to load data"}
-          </h2>
-          <p className="mt-1 text-sm">
-            {errorStatus === 404
-              ? "The requested content does not exist or is not publicly available."
-              : "Please try again later."}
-          </p>
-        </section>
-      )}
-
-      {!isLoading && !error && isEmpty && (
+      {!isLoading && !hasBlockingError && isEmpty && (
         <p className="rounded-lg border border-dashed p-6 text-muted-foreground">
           No public content is available yet.
         </p>
       )}
 
-      {!isLoading && !error && !isEmpty && (
+      {!isLoading && !hasBlockingError && !isEmpty && (
         <div className="space-y-6">
           <DataContent value={data} />
         </div>

@@ -13,7 +13,10 @@ export function ServiceDetailsPage() {
       data={query.data}
       isLoading={query.isLoading}
       error={query.error}
-      isEmpty={query.data?.data === null}
+      isNotFound={query.data?.data === null}
+      onRetry={() => {
+        void query.refetch();
+      }}
     />
   );
 }

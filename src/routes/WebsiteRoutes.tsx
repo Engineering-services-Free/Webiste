@@ -1,5 +1,6 @@
-import { Link, Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
+import { UniversalError } from "../components/common/UniversalError";
 import { AboutPage } from "../features/about/AboutPage";
 import { BlogsPage } from "../features/blogs/BlogsPage";
 import { BlogDetailsPage } from "../features/blogs/BlogDetailsPage";
@@ -28,21 +29,8 @@ export function WebsiteRoutes() {
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/documents" element={<DocumentsPage />} />
       <Route path="/documents/:id" element={<DocumentDetailsPage />} />
-      <Route
-        path="/404"
-        element={
-          <main className="mx-auto max-w-6xl px-6 py-16">
-            <h1 className="text-3xl font-semibold">Page not found</h1>
-            <p className="mt-3 text-muted-foreground">
-              The page you requested does not exist.
-            </p>
-            <Link className="mt-6 inline-block underline" to="/">
-              Return home
-            </Link>
-          </main>
-        }
-      />
-      <Route path="*" element={<Navigate replace to="/404" />} />
+      <Route path="/404" element={<UniversalError type="not-found" />} />
+      <Route path="*" element={<UniversalError type="not-found" />} />
     </Routes>
   );
 }

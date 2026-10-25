@@ -11,6 +11,9 @@ export function ContactPage() {
       isLoading={query.isLoading}
       error={query.error}
       isEmpty={query.data?.data === null}
+      onRetry={() => {
+        void query.refetch();
+      }}
     />
   );
 }

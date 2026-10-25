@@ -1,0 +1,52 @@
+{
+  "rewrites": [
+    {
+      "source": "/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services/:slug",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/projects",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/projects/:slug",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/clients",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blogs",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blogs/:slug",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/documents",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/documents/:id",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/404",
+      "destination": "/index.html"
+    }
+  ]
+}

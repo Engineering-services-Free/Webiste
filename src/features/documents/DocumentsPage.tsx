@@ -11,6 +11,9 @@ export function DocumentsPage() {
       isLoading={query.isLoading}
       error={query.error}
       isEmpty={query.data?.data.length === 0}
+      onRetry={() => {
+        void query.refetch();
+      }}
     />
   );
 }
