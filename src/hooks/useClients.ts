@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import { getClientById, getClients } from "../api/clients.api";
 import type { GetClientsParams } from "../typings/clients.typings";
@@ -9,6 +9,7 @@ export function useClients(params?: GetClientsParams) {
     queryKey: ["clients", params],
     queryFn: () => getClients(params),
     staleTime: PUBLIC_LIST_STALE_TIME,
+    placeholderData: keepPreviousData,
   });
 }
 

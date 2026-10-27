@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, type Location } from "react-router-dom";
 
 import { UniversalError } from "../components/common/UniversalError";
 import { AboutPage } from "../features/about/AboutPage";
@@ -14,9 +14,9 @@ import { ProjectsPage } from "../features/projects/ProjectsPage";
 import { ServiceDetailsPage } from "../features/services/ServiceDetailsPage";
 import { ServicesPage } from "../features/services/ServicesPage";
 
-export function WebsiteRoutes() {
+export function WebsiteRoutes({ location }: { location?: Location }) {
   return (
-    <Routes>
+    <Routes location={location}>
       <Route path="/" element={<LandingPage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/services" element={<ServicesPage />} />

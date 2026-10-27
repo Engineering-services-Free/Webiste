@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import {
   getProjectById,
@@ -13,6 +13,7 @@ export function useProjects(params?: GetProjectsParams) {
     queryKey: ["projects", params],
     queryFn: () => getProjects(params),
     staleTime: PUBLIC_LIST_STALE_TIME,
+    placeholderData: keepPreviousData,
   });
 }
 

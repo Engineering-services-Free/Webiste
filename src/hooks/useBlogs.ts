@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import {
   getBlogById,
@@ -13,6 +13,7 @@ export function useBlogs(params?: GetBlogsParams) {
     queryKey: ["blogs", params],
     queryFn: () => getBlogs(params),
     staleTime: PUBLIC_LIST_STALE_TIME,
+    placeholderData: keepPreviousData,
   });
 }
 

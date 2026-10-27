@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import {
   getDocumentById,
@@ -12,6 +12,7 @@ export function useDocuments(params?: GetDocumentsParams) {
     queryKey: ["documents", params],
     queryFn: () => getDocuments(params),
     staleTime: PUBLIC_LIST_STALE_TIME,
+    placeholderData: keepPreviousData,
   });
 }
 

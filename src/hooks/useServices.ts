@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import {
   getServiceById,
@@ -13,6 +13,7 @@ export function useServices(params?: GetServicesParams) {
     queryKey: ["services", params],
     queryFn: () => getServices(params),
     staleTime: PUBLIC_LIST_STALE_TIME,
+    placeholderData: keepPreviousData,
   });
 }
 
