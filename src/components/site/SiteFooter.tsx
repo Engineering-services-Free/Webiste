@@ -9,7 +9,7 @@ import { Marquee, Reveal } from "./motion";
 import { BrandMark } from "./SiteHeader";
 import { NAV_LINKS } from "@/lib/site";
 import { ButtonLink, GridLines } from "./ui";
-import { scrollToY } from "@/lib/smooth-scroll";
+import { scrollToY } from "@/lib/scroll";
 
 export function CtaBand() {
   const contact = useContact().data?.data;

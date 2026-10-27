@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 
 import { ButtonLink } from "./ui";
-import { lockScroll } from "@/lib/smooth-scroll";
+import { lockScroll } from "@/lib/scroll";
 
 export function BrandMark({ className }: { className?: string }) {
   return (

@@ -23,7 +23,7 @@ import { useServices } from "@/hooks/useServices";
 import { titleCase } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { ProjectImage } from "@/typings/projects.typings";
-import { lockScroll } from "@/lib/smooth-scroll";
+import { lockScroll } from "@/lib/scroll";
 
 const GALLERY_PREVIEW = 9;
 

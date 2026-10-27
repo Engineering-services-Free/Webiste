@@ -8,7 +8,7 @@ import { UniversalError } from "@/components/common/UniversalError";
 import { getUniversalErrorType } from "@/components/common/universalError.utils";
 import { useMagnetic } from "@/hooks/useMagnetic";
 import { isHtml } from "@/lib/format";
-import { scrollToY, useIntroDone } from "@/lib/smooth-scroll";
+import { scrollToY, useIntroDone } from "@/lib/scroll";
 import { cn } from "@/lib/utils";
 import type { Pagination as PaginationMeta } from "@/typings/api.typings";
 

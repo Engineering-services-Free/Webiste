@@ -1,5 +1,4 @@
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
-import { useEffect } from "react";
 import { BrowserRouter, useLocation } from "react-router-dom";
 
 import { UniversalLoader } from "./components/common/UniversalLoader";
@@ -7,14 +6,12 @@ import { CustomCursor, FloatingActions, Grain, PageCurtain } from "./components/
 import { ScrollProgress } from "./components/site/motion";
 import { CtaBand, SiteFooter } from "./components/site/SiteFooter";
 import { SiteHeader } from "./components/site/SiteHeader";
-import { scrollToY, startSmoothScroll } from "./lib/smooth-scroll";
+import { scrollToY } from "./lib/scroll";
 import { WebsiteRoutes } from "./routes/WebsiteRoutes";
 
 function SiteLayout() {
   const location = useLocation();
   const showCta = !["/contact", "/404"].includes(location.pathname);
-
-  useEffect(() => startSmoothScroll(), []);
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">

@@ -6,7 +6,6 @@ import {
   useScroll,
   useTransform,
   type HTMLMotionProps,
-  type MotionValue,
   type Variants,
 } from "motion/react";
 import {
@@ -18,7 +17,7 @@ import {
 } from "react";
 
 import { EASE } from "@/lib/site";
-import { useIntroDone } from "@/lib/smooth-scroll";
+import { useIntroDone } from "@/lib/scroll";
 import { cn } from "@/lib/utils";
 
 
@@ -330,44 +329,5 @@ export function ClipReveal({
         {children}
       </motion.div>
     </motion.div>
-  );
-}
-
-/** Large statement whose words light up as it scrolls through the viewport. */
-export function ScrollRevealText({ text, className }: { text: string; className?: string }) {
-  const ref = useRef<HTMLParagraphElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.5"] });
-  const words = text.split(/\s+/);
-
-  return (
-    <p ref={ref} className={className} aria-label={text}>
-      {words.map((word, index) => (
-        <RevealWord
-          key={`${word}-${index}`}
-          progress={scrollYProgress}
-          range={[index / words.length, (index + 1) / words.length]}
-        >
-          {word}
-        </RevealWord>
-      ))}
-    </p>
-  );
-}
-
-function RevealWord({
-  children,
-  progress,
-  range,
-}: {
-  children: string;
-  progress: MotionValue<number>;
-  range: [number, number];
-}) {
-  const opacity = useTransform(progress, range, [0.14, 1]);
-
-  return (
-    <motion.span aria-hidden="true" className="mr-[0.25em] inline-block" style={{ opacity }}>
-      {children}
-    </motion.span>
   );
 }

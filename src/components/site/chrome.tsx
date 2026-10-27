@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { useContact } from "@/hooks/useContact";
 import { whatsappHref } from "@/lib/format";
 import { EASE } from "@/lib/site";
-import { scrollToY } from "@/lib/smooth-scroll";
+import { scrollToY } from "@/lib/scroll";
 import { cn } from "@/lib/utils";
 
 /**

@@ -15,7 +15,6 @@ import {
   CountUp,
   Marquee,
   ParallaxImage,
-  ScrollRevealText,
   Reveal,
   SplitText,
   Stagger,
@@ -37,7 +36,7 @@ import { useProjects } from "@/hooks/useProjects";
 import { useServices } from "@/hooks/useServices";
 import { useWebsiteDashboard } from "@/hooks/useWebsiteDashboard";
 import { EASE } from "@/lib/site";
-import { scrollToY, useIntroDone } from "@/lib/smooth-scroll";
+import { scrollToY, useIntroDone } from "@/lib/scroll";
 import { cn } from "@/lib/utils";
 import type { LandingPage as LandingContent } from "@/typings/landing-page.typings";
 
@@ -105,17 +104,6 @@ export function LandingPage() {
   return (
     <>
       <Hero landing={landing} stats={stats} />
-
-      {/* Statement that lights up word by word while scrolling */}
-      <section className="container-site py-24 sm:py-36">
-        <Reveal>
-          <span className="eyebrow text-brand">Since day one</span>
-        </Reveal>
-        <ScrollRevealText
-          text="From the first drawing to the final bolt, we engineer, fabricate and erect steel, piping and plant systems that industrial sites can depend on for decades."
-          className="display mt-8 max-w-6xl text-[1.9rem] leading-[1.2] text-ink sm:text-5xl lg:text-[4rem]"
-        />
-      </section>
 
       {/* What we do */}
       <section className="container-site grid gap-14 py-24 sm:py-32 lg:grid-cols-[1fr_1.15fr] lg:gap-24">

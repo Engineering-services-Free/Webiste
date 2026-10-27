@@ -3,7 +3,7 @@ import { AnimatePresence, animate, motion, useMotionValue, useTransform } from "
 import { useEffect, useState, useSyncExternalStore } from "react";
 
 import { EASE } from "@/lib/site";
-import { lockScroll, markIntroDone } from "@/lib/smooth-scroll";
+import { lockScroll, markIntroDone } from "@/lib/scroll";
 
 const MIN_INTRO_MS = 1800;
 const BRAND = "MUTHAMMAL";
