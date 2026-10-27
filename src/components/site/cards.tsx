@@ -5,7 +5,7 @@ import { documentTypeLabel, formatDate, titleCase, truncate } from "@/lib/format
 import { cn } from "@/lib/utils";
 import type { WebsiteDocument } from "@/typings/documents.typings";
 
-import { SmartImage } from "./motion";
+import { ClipReveal, SmartImage } from "./motion";
 
 interface CardImage {
   url: string;
@@ -30,6 +30,7 @@ export function ServiceCard({
   return (
     <Link
       to={`/services/${service.slug}`}
+      data-cursor="Explore"
       className="group relative flex h-full min-h-[30rem] flex-col justify-end overflow-hidden rounded-md bg-ink text-white"
     >
       <SmartImage
@@ -79,10 +80,10 @@ export function ProjectCard({
   clientName?: string;
 }) {
   return (
-    <Link to={`/projects/${project.slug}`} className="group block">
-      <div
+    <Link to={`/projects/${project.slug}`} data-cursor="View" className="group block">
+      <ClipReveal
         className={cn(
-          "relative overflow-hidden rounded-md bg-ink",
+          "relative rounded-md bg-ink",
           large ? "aspect-[16/10]" : "aspect-[4/3]",
         )}
       >
@@ -100,7 +101,7 @@ export function ProjectCard({
             {project.year}
           </span>
         )}
-      </div>
+      </ClipReveal>
       <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs uppercase tracking-[0.16em] text-muted-foreground">
         {(clientName || project.industry) && (
           <span>{clientName ?? project.industry}</span>
@@ -141,6 +142,7 @@ export function BlogCard({ blog }: { blog: BlogCardData }) {
   return (
     <Link
       to={`/blogs/${blog.slug}`}
+      data-cursor="Read"
       className="group flex h-full flex-col overflow-hidden rounded-md border border-ink/10 bg-white transition-shadow duration-500 hover:shadow-[0_30px_60px_-30px_rgba(13,15,18,0.35)]"
     >
       <div className="aspect-[16/10] overflow-hidden bg-ink">
@@ -202,6 +204,7 @@ export function DocumentCard({ document }: { document: WebsiteDocument }) {
   return (
     <Link
       to={`/documents/${document.id}`}
+      data-cursor="Open"
       className="group relative flex h-full flex-col justify-between overflow-hidden rounded-md border border-ink/10 bg-white p-8 transition-colors duration-500 hover:border-ink hover:bg-ink hover:text-white"
     >
       <div className="flex items-start justify-between">

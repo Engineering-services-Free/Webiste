@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 
 
 import { ButtonLink } from "./ui";
+import { lockScroll } from "@/lib/smooth-scroll";
 
 export function BrandMark({ className }: { className?: string }) {
   return (
@@ -41,10 +42,11 @@ export function SiteHeader() {
   });
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    if (!open) {
+      return;
+    }
+    lockScroll(true);
+    return () => lockScroll(false);
   }, [open]);
 
   return (

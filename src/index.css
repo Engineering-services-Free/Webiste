@@ -3,6 +3,7 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/instrument-sans";
 @import "@fontsource/tenor-sans";
+@import "lenis/dist/lenis.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -82,7 +83,6 @@
     }
     html {
         @apply font-sans antialiased;
-        scroll-behavior: smooth;
     }
     body {
         @apply bg-background text-foreground;
@@ -139,6 +139,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
     .animate-marquee { animation: none; }
 }

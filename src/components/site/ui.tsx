@@ -6,11 +6,15 @@ import { Link } from "react-router-dom";
 import { HtmlContent } from "@/components/common/HtmlContent";
 import { UniversalError } from "@/components/common/UniversalError";
 import { getUniversalErrorType } from "@/components/common/universalError.utils";
+import { useMagnetic } from "@/hooks/useMagnetic";
 import { isHtml } from "@/lib/format";
+import { scrollToY, useIntroDone } from "@/lib/smooth-scroll";
 import { cn } from "@/lib/utils";
 import type { Pagination as PaginationMeta } from "@/typings/api.typings";
 
 import { Reveal, SmartImage, SplitText } from "./motion";
+
+const MotionLink = motion.create(Link);
 import { EASE } from "@/lib/site";
 
 type ButtonTone = "light" | "dark" | "outline-light" | "outline-dark";
@@ -40,6 +44,7 @@ export function ButtonLink({
   external,
   icon,
 }: ButtonLinkProps) {
+  const magnetic = useMagnetic<HTMLAnchorElement>();
   const classes = cn(
     "group/btn inline-flex h-12 items-center gap-3 whitespace-nowrap rounded-[4px] px-6 text-[0.8rem] font-semibold uppercase tracking-[0.14em] transition-colors duration-300",
     toneClasses[tone],
@@ -61,16 +66,22 @@ export function ButtonLink({
 
   if (external) {
     return (
-      <a href={to} target="_blank" rel="noopener noreferrer" className={classes}>
+      <motion.a
+        href={to}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={classes}
+        {...magnetic}
+      >
         {content}
-      </a>
+      </motion.a>
     );
   }
 
   return (
-    <Link to={to} className={classes}>
+    <MotionLink to={to} className={classes} {...magnetic}>
       {content}
-    </Link>
+    </MotionLink>
   );
 }
 
@@ -210,6 +221,7 @@ export function PageHero({
   children,
   compact,
 }: PageHeroProps) {
+  const ready = useIntroDone();
   return (
     <section
       className={cn(
@@ -221,7 +233,7 @@ export function PageHero({
         <motion.div
           className="absolute inset-0 -z-10"
           initial={{ scale: 1.15 }}
-          animate={{ scale: 1 }}
+          animate={ready && { scale: 1 }}
           transition={{ duration: 2.2, ease: EASE }}
         >
           <SmartImage
@@ -242,7 +254,7 @@ export function PageHero({
           <motion.nav
             aria-label="Breadcrumb"
             initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={ready && { opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE }}
             className="mb-8 flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.18em] text-white/55"
           >
@@ -263,7 +275,7 @@ export function PageHero({
         <motion.span
           className="eyebrow text-white/60"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={ready && { opacity: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
         >
           {eyebrow}
@@ -279,7 +291,7 @@ export function PageHero({
           <motion.p
             className="mt-7 max-w-2xl text-lg leading-8 text-white/70"
             initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={ready && { opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: EASE, delay: 0.6 }}
           >
             {description}
@@ -288,7 +300,7 @@ export function PageHero({
         {children && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={ready && { opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: EASE, delay: 0.75 }}
             className="mt-10"
           >
@@ -364,7 +376,7 @@ export function Pagination({
   const pages = Array.from({ length: pagination.totalPages }, (_, i) => i + 1);
   const go = (page: number) => {
     onChange(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToY(0);
   };
 
   return (

@@ -23,6 +23,7 @@ import { useServices } from "@/hooks/useServices";
 import { titleCase } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { ProjectImage } from "@/typings/projects.typings";
+import { lockScroll } from "@/lib/smooth-scroll";
 
 const GALLERY_PREVIEW = 9;
 
@@ -192,6 +193,7 @@ export function ProjectDetailsPage() {
       {nextProject && (
         <Link
           to={`/projects/${nextProject.slug}`}
+          data-cursor="Next"
           className="group relative isolate block overflow-hidden bg-ink py-24 text-white sm:py-32"
         >
           <SmartImage
@@ -239,12 +241,11 @@ function Gallery({ images, title }: { images: ProjectImage[]; title: string }) {
       if (event.key === "ArrowRight") step(1);
       if (event.key === "ArrowLeft") step(-1);
     };
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    lockScroll(true);
     window.addEventListener("keydown", onKey);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      lockScroll(false);
       window.removeEventListener("keydown", onKey);
     };
   }, [active, step]);
@@ -259,6 +260,7 @@ function Gallery({ images, title }: { images: ProjectImage[]; title: string }) {
               <button
                 type="button"
                 onClick={() => setActive(index)}
+                data-cursor="Zoom"
                 className="group relative block w-full overflow-hidden rounded-md bg-ink"
                 aria-label={`Open photo ${index + 1} of ${images.length}`}
               >

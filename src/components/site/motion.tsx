@@ -6,6 +6,7 @@ import {
   useScroll,
   useTransform,
   type HTMLMotionProps,
+  type MotionValue,
   type Variants,
 } from "motion/react";
 import {
@@ -17,6 +18,7 @@ import {
 } from "react";
 
 import { EASE } from "@/lib/site";
+import { useIntroDone } from "@/lib/smooth-scroll";
 import { cn } from "@/lib/utils";
 
 
@@ -91,9 +93,10 @@ export function SplitText({
   immediate = false,
 }: SplitTextProps) {
   const Tag = motion[as];
+  const ready = useIntroDone();
   const words = text.split(/\s+/).filter(Boolean);
   const trigger = immediate
-    ? { animate: "visible" }
+    ? { animate: ready ? "visible" : "hidden" }
     : {
         whileInView: "visible",
         viewport: { once: true, margin: "0px 0px -10% 0px" },
@@ -298,5 +301,73 @@ export function ScrollProgress() {
       className="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-brand to-brand-red"
       style={{ scaleX: scrollYProgress }}
     />
+  );
+}
+
+/** Wipes an image block open from the bottom while the image settles from a zoom. */
+export function ClipReveal({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <motion.div
+      className={cn("overflow-hidden", className)}
+      initial={{ clipPath: "inset(100% 0 0 0)" }}
+      whileInView={{ clipPath: "inset(0% 0 0 0)" }}
+      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+      transition={{ duration: 1.2, ease: EASE }}
+    >
+      <motion.div
+        className="h-full w-full"
+        initial={{ scale: 1.25 }}
+        whileInView={{ scale: 1 }}
+        viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+        transition={{ duration: 1.6, ease: EASE }}
+      >
+        {children}
+      </motion.div>
+    </motion.div>
+  );
+}
+
+/** Large statement whose words light up as it scrolls through the viewport. */
+export function ScrollRevealText({ text, className }: { text: string; className?: string }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.5"] });
+  const words = text.split(/\s+/);
+
+  return (
+    <p ref={ref} className={className} aria-label={text}>
+      {words.map((word, index) => (
+        <RevealWord
+          key={`${word}-${index}`}
+          progress={scrollYProgress}
+          range={[index / words.length, (index + 1) / words.length]}
+        >
+          {word}
+        </RevealWord>
+      ))}
+    </p>
+  );
+}
+
+function RevealWord({
+  children,
+  progress,
+  range,
+}: {
+  children: string;
+  progress: MotionValue<number>;
+  range: [number, number];
+}) {
+  const opacity = useTransform(progress, range, [0.14, 1]);
+
+  return (
+    <motion.span aria-hidden="true" className="mr-[0.25em] inline-block" style={{ opacity }}>
+      {children}
+    </motion.span>
   );
 }

@@ -1,16 +1,20 @@
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
+import { useEffect } from "react";
 import { BrowserRouter, useLocation } from "react-router-dom";
 
 import { UniversalLoader } from "./components/common/UniversalLoader";
+import { CustomCursor, FloatingActions, Grain, PageCurtain } from "./components/site/chrome";
 import { ScrollProgress } from "./components/site/motion";
-import { EASE } from "./lib/site";
 import { CtaBand, SiteFooter } from "./components/site/SiteFooter";
 import { SiteHeader } from "./components/site/SiteHeader";
+import { scrollToY, startSmoothScroll } from "./lib/smooth-scroll";
 import { WebsiteRoutes } from "./routes/WebsiteRoutes";
 
 function SiteLayout() {
   const location = useLocation();
   const showCta = !["/contact", "/404"].includes(location.pathname);
+
+  useEffect(() => startSmoothScroll(), []);
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -23,22 +27,19 @@ function SiteLayout() {
       <ScrollProgress />
       <SiteHeader />
 
-      <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
-        <motion.main
-          id="main"
-          key={location.pathname}
-          className="flex-1"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.5, ease: EASE } }}
-          exit={{ opacity: 0, transition: { duration: 0.3, ease: EASE } }}
-        >
+      <AnimatePresence mode="wait" onExitComplete={() => scrollToY(0, true)}>
+        <motion.main id="main" key={location.pathname} className="flex-1">
+          <PageCurtain />
           <WebsiteRoutes location={location} />
         </motion.main>
       </AnimatePresence>
 
       {showCta && <CtaBand />}
       <SiteFooter />
+      <FloatingActions />
       <UniversalLoader />
+      <CustomCursor />
+      <Grain />
     </div>
   );
 }

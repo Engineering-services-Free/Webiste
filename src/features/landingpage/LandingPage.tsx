@@ -15,6 +15,7 @@ import {
   CountUp,
   Marquee,
   ParallaxImage,
+  ScrollRevealText,
   Reveal,
   SplitText,
   Stagger,
@@ -36,6 +37,7 @@ import { useProjects } from "@/hooks/useProjects";
 import { useServices } from "@/hooks/useServices";
 import { useWebsiteDashboard } from "@/hooks/useWebsiteDashboard";
 import { EASE } from "@/lib/site";
+import { scrollToY, useIntroDone } from "@/lib/smooth-scroll";
 import { cn } from "@/lib/utils";
 import type { LandingPage as LandingContent } from "@/typings/landing-page.typings";
 
@@ -103,6 +105,17 @@ export function LandingPage() {
   return (
     <>
       <Hero landing={landing} stats={stats} />
+
+      {/* Statement that lights up word by word while scrolling */}
+      <section className="container-site py-24 sm:py-36">
+        <Reveal>
+          <span className="eyebrow text-brand">Since day one</span>
+        </Reveal>
+        <ScrollRevealText
+          text="From the first drawing to the final bolt, we engineer, fabricate and erect steel, piping and plant systems that industrial sites can depend on for decades."
+          className="display mt-8 max-w-6xl text-[1.9rem] leading-[1.2] text-ink sm:text-5xl lg:text-[4rem]"
+        />
+      </section>
 
       {/* What we do */}
       <section className="container-site grid gap-14 py-24 sm:py-32 lg:grid-cols-[1fr_1.15fr] lg:gap-24">
@@ -267,6 +280,7 @@ function Hero({
   landing: LandingContent | null;
   stats: { label: string; value: number }[];
 }) {
+  const ready = useIntroDone();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
@@ -287,7 +301,7 @@ function Hero({
           preload="metadata"
           aria-hidden="true"
           initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
+          animate={ready && { opacity: 1, scale: 1 }}
           transition={{ duration: 2.4, ease: EASE }}
         />
       </motion.div>
@@ -301,7 +315,7 @@ function Hero({
         <motion.span
           className="eyebrow text-white/70"
           initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+          animate={ready && { opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: EASE, delay: 0.3 }}
         >
           Engineering & industrial services · India
@@ -317,7 +331,7 @@ function Hero({
           <motion.p
             className="mt-8 max-w-xl text-lg leading-8 text-white/75"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={ready && { opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: EASE, delay: 0.9 }}
           >
             {landing.hero.description}
@@ -326,7 +340,7 @@ function Hero({
         <motion.div
           className="mt-10 flex flex-wrap gap-3"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={ready && { opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: EASE, delay: 1.05 }}
         >
           <ButtonLink to="/services" tone="light">Explore services</ButtonLink>
@@ -336,7 +350,7 @@ function Hero({
         <motion.div
           className="mt-16 grid grid-cols-3 gap-4 border-t border-white/15 pt-8 sm:mt-24"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={ready && { opacity: 1 }}
           transition={{ duration: 1.2, delay: 1.3 }}
         >
           {stats.map((stat) => (
@@ -354,12 +368,12 @@ function Hero({
         href="#main-content"
         onClick={(event) => {
           event.preventDefault();
-          window.scrollTo({ top: window.innerHeight - 80, behavior: "smooth" });
+          scrollToY(window.innerHeight - 80);
         }}
         aria-label="Scroll to content"
         className="absolute bottom-10 right-5 hidden size-14 place-items-center rounded-full border border-white/30 text-white transition hover:bg-white hover:text-ink sm:grid lg:right-12"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 8, 0] }}
+        animate={ready && { opacity: 1, y: [0, 8, 0] }}
         transition={{ opacity: { delay: 1.6 }, y: { duration: 2, repeat: Infinity, ease: "easeInOut" } }}
       >
         <ArrowDown className="size-5" />

@@ -9,6 +9,7 @@ import { Marquee, Reveal } from "./motion";
 import { BrandMark } from "./SiteHeader";
 import { NAV_LINKS } from "@/lib/site";
 import { ButtonLink, GridLines } from "./ui";
+import { scrollToY } from "@/lib/smooth-scroll";
 
 export function CtaBand() {
   const contact = useContact().data?.data;
@@ -170,7 +171,7 @@ export function SiteFooter() {
         <p>© {year} Muthammal Engineering Services. All rights reserved.</p>
         <button
           type="button"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => scrollToY(0)}
           className="inline-flex items-center gap-2 uppercase tracking-[0.16em] transition hover:text-white"
         >
           Back to top
