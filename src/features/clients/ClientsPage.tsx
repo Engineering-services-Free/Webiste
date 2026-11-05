@@ -92,7 +92,7 @@ export function ClientsPage() {
                   <SmartImage
                     src={client.image?.url}
                     alt={client.image?.alt || client.name}
-                    className="max-h-28 max-w-[80%] object-contain grayscale transition duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                    className="max-h-28 max-w-[80%] object-contain transition duration-700 group-hover:scale-105"
                   />
                 </div>
                 <div className="flex items-center justify-between gap-4 border-t border-ink/10 px-6 py-5">

@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { UniversalError } from "@/components/common/UniversalError";
 import { BlogCard } from "@/components/site/cards";
-import { Reveal, Stagger, StaggerItem } from "@/components/site/motion";
+import { Reveal, SmartImage, Stagger, StaggerItem } from "@/components/site/motion";
 import {
   ButtonLink,
   Chip,
@@ -109,13 +109,22 @@ export function BlogDetailsPage() {
             <Reveal delay={0.15}>
               <Link
                 to={`/projects/${project.slug}`}
-                className="group block rounded-md bg-ink p-7 text-white"
+                data-cursor="View"
+                className="group relative isolate block overflow-hidden rounded-md bg-ink p-7 text-white transition-all duration-500 ease-out hover:-translate-y-1.5 hover:scale-[1.03] hover:shadow-[0_30px_60px_-25px_rgba(21,97,192,0.6)]"
               >
-                <span className="text-xs uppercase tracking-[0.18em] text-white/55">Related project</span>
+                <SmartImage
+                  src={project.heroImage?.url}
+                  alt=""
+                  className="absolute inset-0 -z-20 h-full w-full object-cover opacity-0 transition duration-[1.2s] ease-out group-hover:scale-110 group-hover:opacity-100"
+                />
+                <span className="absolute inset-0 -z-10 bg-gradient-to-br from-ink via-ink/95 to-ink/80 transition-colors duration-500 group-hover:from-brand/95 group-hover:via-brand/85 group-hover:to-ink/70" />
+                <span className="text-xs uppercase tracking-[0.18em] text-white/55 transition-colors group-hover:text-white/80">Related project</span>
                 <p className="display mt-3 text-lg">{titleCase(project.title)}</p>
                 <span className="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em]">
                   View case study
-                  <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  <span className="grid size-8 place-items-center rounded-full border border-white/30 transition-all duration-500 group-hover:rotate-45 group-hover:border-white group-hover:bg-white group-hover:text-brand">
+                    <ArrowUpRight className="size-4" />
+                  </span>
                 </span>
               </Link>
             </Reveal>

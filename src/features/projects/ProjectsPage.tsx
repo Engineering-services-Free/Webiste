@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ProjectCard } from "@/components/site/cards";
 import { Reveal } from "@/components/site/motion";
 import {
+  BuildingGeometry,
   EmptyState,
   PageHero,
   PageSkeleton,
@@ -41,7 +42,9 @@ export function ProjectsPage() {
         image={projects[0]?.heroImage}
         crumbs={[{ label: "Home", to: "/" }, { label: "Projects" }]}
       />
-      <section className="container-site py-24 sm:py-32">
+      <section className="relative isolate overflow-hidden bg-white">
+        <BuildingGeometry />
+        <div className="container-site py-24 sm:py-32">
         <SectionHeading
           eyebrow={`${query.data.pagination.total} project${query.data.pagination.total === 1 ? "" : "s"}`}
           title="Our portfolio"
@@ -64,6 +67,7 @@ export function ProjectsPage() {
           </div>
         )}
         <Pagination pagination={query.data.pagination} onChange={setPage} />
+        </div>
       </section>
     </>
   );

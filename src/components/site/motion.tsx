@@ -221,6 +221,42 @@ export function SmartImage({
   );
 }
 
+/**
+ * Shows the whole image inside a fixed-ratio card without cropping: the photo is
+ * contained, and a blurred copy of itself fills any leftover space.
+ */
+export function FitImage({
+  src,
+  alt,
+  className,
+  imgClassName,
+}: {
+  src?: string;
+  alt: string;
+  className?: string;
+  imgClassName?: string;
+}) {
+  return (
+    <div className={cn("relative h-full w-full overflow-hidden bg-ink", className)}>
+      {src && (
+        <img
+          src={src}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full scale-110 object-cover opacity-60 blur-2xl"
+        />
+      )}
+      <SmartImage
+        src={src}
+        alt={alt}
+        className={cn("relative h-full w-full object-contain", imgClassName)}
+      />
+    </div>
+  );
+}
+
 export function CountUp({
   value,
   suffix = "",

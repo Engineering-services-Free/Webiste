@@ -5,7 +5,7 @@ import { documentTypeLabel, formatDate, titleCase, truncate } from "@/lib/format
 import { cn } from "@/lib/utils";
 import type { WebsiteDocument } from "@/typings/documents.typings";
 
-import { ClipReveal, SmartImage } from "./motion";
+import { ClipReveal, FitImage, SmartImage } from "./motion";
 
 interface CardImage {
   url: string;
@@ -83,14 +83,14 @@ export function ProjectCard({
     <Link to={`/projects/${project.slug}`} data-cursor="View" className="group block">
       <ClipReveal
         className={cn(
-          "relative rounded-md bg-ink",
+          "relative rounded-md bg-ink shadow-[0_24px_50px_-30px_rgba(13,15,18,0.45)]",
           large ? "aspect-[16/10]" : "aspect-[4/3]",
         )}
       >
-        <SmartImage
+        <FitImage
           src={project.heroImage?.url}
           alt={project.heroImage?.alt || project.title}
-          className="h-full w-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
+          imgClassName="transition-transform duration-[1.4s] ease-out group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-ink/0 transition-colors duration-500 group-hover:bg-ink/25" />
         <span className="absolute bottom-5 right-5 grid size-14 scale-75 place-items-center rounded-full bg-white text-ink opacity-0 transition-all duration-500 group-hover:scale-100 group-hover:opacity-100">
@@ -146,10 +146,10 @@ export function BlogCard({ blog }: { blog: BlogCardData }) {
       className="group flex h-full flex-col overflow-hidden rounded-md border border-ink/10 bg-white transition-shadow duration-500 hover:shadow-[0_30px_60px_-30px_rgba(13,15,18,0.35)]"
     >
       <div className="aspect-[16/10] overflow-hidden bg-ink">
-        <SmartImage
+        <FitImage
           src={blog.coverImage?.url}
           alt={blog.coverImage?.alt || blog.title}
-          className="h-full w-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
+          imgClassName="transition-transform duration-[1.4s] ease-out group-hover:scale-105"
         />
       </div>
       <div className="flex flex-1 flex-col p-6 sm:p-8">
@@ -193,7 +193,7 @@ export function ClientLogo({
         <SmartImage
           src={client.image?.url}
           alt={client.image?.alt || client.name}
-          className="max-h-20 max-w-40 object-contain grayscale transition duration-500 group-hover:grayscale-0 hover:grayscale-0"
+          className="max-h-20 max-w-40 object-contain transition duration-500 hover:scale-110"
         />
       </div>
     </div>

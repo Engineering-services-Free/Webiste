@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { BlogCard } from "@/components/site/cards";
-import { Reveal, SmartImage, Stagger, StaggerItem } from "@/components/site/motion";
+import { FitImage, Reveal, Stagger, StaggerItem } from "@/components/site/motion";
 import {
   EmptyState,
   PageHero,
@@ -49,11 +49,12 @@ export function BlogsPage() {
               to={`/blogs/${lead.slug}`}
               className="group grid overflow-hidden rounded-md bg-ink text-white lg:grid-cols-[1.25fr_1fr]"
             >
-              <div className="aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-[28rem]">
-                <SmartImage
+              <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-[26rem]">
+                <FitImage
+                  className="absolute inset-0"
                   src={lead.coverImage?.url}
                   alt={lead.coverImage?.alt || lead.title}
-                  className="h-full w-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
+                  imgClassName="transition-transform duration-[1.4s] ease-out group-hover:scale-105"
                 />
               </div>
               <div className="flex flex-col justify-between gap-10 p-8 sm:p-12">
