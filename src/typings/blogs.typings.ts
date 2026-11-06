@@ -24,6 +24,7 @@ export interface Blog {
   slug: string;
   shortDescription: string;
   overview: string;
+  cardImage?: BlogImage;
   coverImage: BlogImage;
   content: string;
   projectId: string;

@@ -12,11 +12,19 @@ interface CardImage {
   alt: string;
 }
 
+function resolveCardImage(
+  primary?: CardImage,
+  fallback?: CardImage,
+): CardImage | undefined {
+  return primary?.url ? primary : fallback;
+}
+
 export interface ServiceCardData {
   title: string;
   slug: string;
   shortDescription: string;
-  heroImage: CardImage;
+  cardImage?: CardImage;
+  heroImage?: CardImage;
   tagline?: string;
 }
 
@@ -27,6 +35,8 @@ export function ServiceCard({
   service: ServiceCardData;
   index: number;
 }) {
+  const image = resolveCardImage(service.cardImage, service.heroImage);
+
   return (
     <Link
       to={`/services/${service.slug}`}
@@ -34,8 +44,8 @@ export function ServiceCard({
       className="group relative flex h-full min-h-[30rem] flex-col justify-end overflow-hidden rounded-md bg-ink text-white"
     >
       <SmartImage
-        src={service.heroImage?.url}
-        alt={service.title}
+        src={image?.url}
+        alt={image?.alt || service.title}
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-ink/10 transition-opacity duration-500 group-hover:opacity-90" />
@@ -64,7 +74,8 @@ export interface ProjectCardData {
   title: string;
   slug: string;
   shortDescription: string;
-  heroImage: CardImage;
+  cardImage?: CardImage;
+  heroImage?: CardImage;
   industry?: string;
   location?: string;
   year?: number;
@@ -79,6 +90,8 @@ export function ProjectCard({
   large?: boolean;
   clientName?: string;
 }) {
+  const image = resolveCardImage(project.cardImage, project.heroImage);
+
   return (
     <Link to={`/projects/${project.slug}`} data-cursor="View" className="group block">
       <ClipReveal
@@ -88,8 +101,8 @@ export function ProjectCard({
         )}
       >
         <FitImage
-          src={project.heroImage?.url}
-          alt={project.heroImage?.alt || project.title}
+          src={image?.url}
+          alt={image?.alt || project.title}
           imgClassName="transition-transform duration-[1.4s] ease-out group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-ink/0 transition-colors duration-500 group-hover:bg-ink/25" />
@@ -132,13 +145,16 @@ export interface BlogCardData {
   title: string;
   slug: string;
   shortDescription: string;
-  coverImage: CardImage;
+  cardImage?: CardImage;
+  coverImage?: CardImage;
   readingTime: number;
   createdAt: string;
   publishedAt?: string;
 }
 
 export function BlogCard({ blog }: { blog: BlogCardData }) {
+  const image = resolveCardImage(blog.cardImage, blog.coverImage);
+
   return (
     <Link
       to={`/blogs/${blog.slug}`}
@@ -147,8 +163,8 @@ export function BlogCard({ blog }: { blog: BlogCardData }) {
     >
       <div className="aspect-[16/10] overflow-hidden bg-ink">
         <FitImage
-          src={blog.coverImage?.url}
-          alt={blog.coverImage?.alt || blog.title}
+          src={image?.url}
+          alt={image?.alt || blog.title}
           imgClassName="transition-transform duration-[1.4s] ease-out group-hover:scale-105"
         />
       </div>

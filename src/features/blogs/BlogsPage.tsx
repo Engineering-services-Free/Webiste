@@ -52,8 +52,8 @@ export function BlogsPage() {
               <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-[26rem]">
                 <FitImage
                   className="absolute inset-0"
-                  src={lead.coverImage?.url}
-                  alt={lead.coverImage?.alt || lead.title}
+                  src={(lead.cardImage ?? lead.coverImage)?.url}
+                  alt={(lead.cardImage ?? lead.coverImage)?.alt || lead.title}
                   imgClassName="transition-transform duration-[1.4s] ease-out group-hover:scale-105"
                 />
               </div>

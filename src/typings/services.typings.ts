@@ -41,6 +41,7 @@ export interface Service {
   slug: string;
   tagline?: string;
   shortDescription: string;
+  cardImage?: ServiceImage;
   heroImage: ServiceImage;
   summary: string[];
   overview: string;

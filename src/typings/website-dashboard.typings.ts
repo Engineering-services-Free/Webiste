@@ -10,6 +10,7 @@ export interface WebsiteLandingBlog {
   title: string;
   slug: string;
   shortDescription: string;
+  cardImage?: LandingDashboardImage;
   coverImage: LandingDashboardImage;
   readingTime: number;
   createdAt: string;
@@ -22,6 +23,7 @@ export interface WebsiteLandingProject {
   shortDescription: string;
   industry: string;
   year: number;
+  cardImage?: LandingDashboardImage;
   heroImage: LandingDashboardImage;
   createdAt: string;
 }
@@ -31,6 +33,7 @@ export interface WebsiteLandingService {
   title: string;
   slug: string;
   shortDescription: string;
+  cardImage?: LandingDashboardImage;
   heroImage: LandingDashboardImage;
   featured: boolean;
   createdAt: string;

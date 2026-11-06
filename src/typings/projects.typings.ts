@@ -33,6 +33,7 @@ export interface Project {
   location?: string;
   shortDescription: string;
   overview: string;
+  cardImage?: ProjectImage;
   heroImage: ProjectImage;
   gallery: ProjectImage[];
   challenge: string;
