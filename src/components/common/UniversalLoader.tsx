@@ -162,7 +162,7 @@ function IntroOverlay({
           </div>
 
           <div className="text-center">
-            <p className="flex justify-center overflow-hidden font-display text-3xl tracking-[0.18em] sm:text-4xl" aria-hidden="true">
+            <p className="flex justify-center overflow-hidden font-logo text-3xl font-extrabold tracking-[0.1em] sm:text-4xl" aria-hidden="true">
               {BRAND.split("").map((letter, index) => (
                 <motion.span
                   key={index}
@@ -176,7 +176,7 @@ function IntroOverlay({
               ))}
             </p>
             <motion.p
-              className="mt-3 text-[0.68rem] uppercase tracking-[0.5em] text-white/50"
+              className="mt-3 font-logo text-[0.7rem] font-semibold uppercase tracking-[0.5em] text-white/50"
               initial={{ opacity: 0, letterSpacing: "0.2em" }}
               animate={{ opacity: 1, letterSpacing: "0.5em" }}
               transition={{ duration: 1.4, ease: EASE, delay: 0.8 }}

@@ -7,6 +7,7 @@ import { ProjectCard } from "@/components/site/cards";
 import { Reveal, SplitText, Stagger, StaggerItem } from "@/components/site/motion";
 import { EASE } from "@/lib/site";
 import {
+  BuildingGeometry,
   ButtonLink,
   Chip,
   GridLines,
@@ -193,18 +194,21 @@ export function ServiceDetailsPage() {
       )}
 
       {related.length > 0 && (
-        <section className="container-site py-24 sm:py-32">
-          <SectionHeading
-            eyebrow="Related projects"
-            title="This service in action"
-            action={<ButtonLink to="/projects" tone="outline-dark">All projects</ButtonLink>}
-          />
-          <div className="mt-16 grid gap-x-8 gap-y-16 md:grid-cols-2">
-            {related.slice(0, 4).map((project, index) => (
-              <Reveal key={project.id} delay={(index % 2) * 0.12}>
-                <ProjectCard project={project} />
-              </Reveal>
-            ))}
+        <section className="relative isolate overflow-hidden border-t border-ink/10 bg-white">
+          <BuildingGeometry />
+          <div className="container-site py-24 sm:py-32">
+            <SectionHeading
+              eyebrow="Related projects"
+              title="This service in action"
+              action={<ButtonLink to="/projects" tone="outline-dark">All projects</ButtonLink>}
+            />
+            <div className="mt-16 grid gap-x-8 gap-y-16 md:grid-cols-2">
+              {related.slice(0, 4).map((project, index) => (
+                <Reveal key={project.id} delay={(index % 2) * 0.12}>
+                  <ProjectCard project={project} large />
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
       )}

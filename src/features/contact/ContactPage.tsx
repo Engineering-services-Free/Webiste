@@ -21,7 +21,7 @@ import {
 } from "@/lib/format";
 
 const fieldClass =
-  "w-full rounded-[4px] border border-ink/15 bg-white px-4 py-3.5 text-ink outline-none transition placeholder:text-ink/35 focus:border-brand focus:ring-3 focus:ring-brand/15";
+  "w-full rounded-[4px] border border-ink/15 bg-white px-4 py-4 text-base text-ink outline-none sm:text-lg transition placeholder:text-ink/35 focus:border-brand focus:ring-3 focus:ring-brand/15";
 
 export function ContactPage() {
   const query = useContact();
@@ -189,19 +189,19 @@ function EnquiryForm({
 
   return (
     <form onSubmit={onSubmit} className="mt-12 grid gap-4 sm:grid-cols-2">
-      <label className="grid gap-2 text-sm text-muted-foreground">
+      <label className="grid gap-2.5 text-base font-medium text-ink/75">
         Name *
         <input name="name" required autoComplete="name" className={fieldClass} placeholder="Your full name" />
       </label>
-      <label className="grid gap-2 text-sm text-muted-foreground">
+      <label className="grid gap-2.5 text-base font-medium text-ink/75">
         Company
         <input name="company" autoComplete="organization" className={fieldClass} placeholder="Company name" />
       </label>
-      <label className="grid gap-2 text-sm text-muted-foreground">
+      <label className="grid gap-2.5 text-base font-medium text-ink/75">
         Phone
         <input name="phone" type="tel" autoComplete="tel" className={fieldClass} placeholder="+91" />
       </label>
-      <label className="grid gap-2 text-sm text-muted-foreground">
+      <label className="grid gap-2.5 text-base font-medium text-ink/75">
         Service
         <select name="service" className={fieldClass} defaultValue="">
           <option value="">General enquiry</option>
@@ -212,7 +212,7 @@ function EnquiryForm({
           ))}
         </select>
       </label>
-      <label className="grid gap-2 text-sm text-muted-foreground sm:col-span-2">
+      <label className="grid gap-2.5 text-base font-medium text-ink/75 sm:col-span-2">
         Requirement *
         <textarea
           name="message"
@@ -227,7 +227,7 @@ function EnquiryForm({
         {(["whatsapp", "email"] as const).map((option) => (
           <label
             key={option}
-            className="flex cursor-pointer items-center gap-2 rounded-full border border-ink/15 px-4 py-2 text-sm has-checked:border-ink has-checked:bg-ink has-checked:text-white"
+            className="flex cursor-pointer items-center gap-2 rounded-full border border-ink/15 px-5 py-2.5 text-base has-checked:border-ink has-checked:bg-ink has-checked:text-white"
           >
             <input
               type="radio"
@@ -243,7 +243,7 @@ function EnquiryForm({
       </fieldset>
       <button
         type="submit"
-        className="group mt-2 inline-flex h-12 items-center justify-center gap-3 rounded-[4px] bg-ink px-6 text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-brand sm:col-span-2 sm:justify-self-start"
+        className="group mt-2 inline-flex h-14 items-center justify-center gap-3 rounded-[4px] bg-ink px-8 text-[0.9rem] font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-brand sm:col-span-2 sm:justify-self-start"
       >
         Send enquiry
         <Send className="size-4 transition-transform group-hover:translate-x-1" />

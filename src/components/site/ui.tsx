@@ -246,7 +246,15 @@ export function PageHero({
       ) : (
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(21,97,192,0.35),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(217,24,66,0.18),transparent_50%)]" />
       )}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/70 to-ink/40" />
+      <div
+        className={cn(
+          "absolute inset-0 -z-10 bg-gradient-to-t",
+          image?.url ? "from-ink via-ink/80 to-ink/60" : "from-ink via-ink/70 to-ink/40",
+        )}
+      />
+      {image?.url && (
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/85 via-ink/50 to-transparent" />
+      )}
       <GridLines />
 
       <div className="container-site flex flex-col justify-end pb-14 pt-36 sm:pb-20">
@@ -285,11 +293,16 @@ export function PageHero({
           immediate
           delay={0.25}
           text={title}
-          className="display mt-5 max-w-5xl text-[2.4rem] sm:text-6xl lg:text-7xl"
+          className={cn(
+            "display mt-5 max-w-5xl",
+            title.length > 40
+              ? "text-[1.9rem] sm:text-[2.75rem] lg:text-[3.4rem]"
+              : "text-[2.4rem] sm:text-6xl lg:text-7xl",
+          )}
         />
         {description && (
           <motion.p
-            className="mt-7 max-w-2xl text-lg leading-8 text-white/70"
+            className="text-justified mt-7 max-w-2xl text-lg leading-8 text-white/75"
             initial={{ opacity: 0, y: 16 }}
             animate={ready && { opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: EASE, delay: 0.6 }}
@@ -322,6 +335,83 @@ export function GridLines({ className }: { className?: string }) {
         className,
       )}
     />
+  );
+}
+
+const drawIn = {
+  initial: { pathLength: 0, opacity: 0 },
+  whileInView: { pathLength: 1, opacity: 1 },
+  viewport: { once: true, margin: "0px 0px -10% 0px" },
+};
+
+/**
+ * Line-drawn industrial architecture (towers, crane, truss, isometric blocks)
+ * over a faint blueprint grid. Meant for white sections such as the project lists.
+ */
+export function BuildingGeometry({ className }: { className?: string }) {
+  const line = (delay: number, duration = 2.4) => ({
+    ...drawIn,
+    transition: { duration, ease: EASE, delay },
+  });
+
+  return (
+    <div aria-hidden="true" className={cn("pointer-events-none absolute inset-0 -z-10", className)}>
+      <div className="absolute inset-0 opacity-[0.55] [background-image:linear-gradient(to_right,rgb(13_15_18/0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgb(13_15_18/0.05)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)]" />
+      <svg
+        viewBox="0 0 1440 1000"
+        preserveAspectRatio="xMidYMid slice"
+        className="absolute inset-0 h-full w-full opacity-50 md:opacity-100"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {/* Left: high-rise towers with floor plates */}
+        <g stroke="rgb(13 15 18 / 0.13)" strokeWidth="1.2">
+          <motion.path {...line(0)} d="M40 1000V420h120v580M160 1000V340h110v660M270 1000V520h90v480" />
+          <motion.path
+            {...line(0.4, 3)}
+            d="M40 470h120M40 520h120M40 570h120M40 620h120M40 670h120M40 720h120M40 770h120M40 820h120M40 870h120M40 920h120M160 390h110M160 440h110M160 490h110M160 540h110M160 590h110M160 640h110M160 690h110M160 740h110M160 790h110M160 840h110M160 890h110M160 940h110M270 570h90M270 620h90M270 670h90M270 720h90M270 770h90M270 820h90M270 870h90M270 920h90"
+          />
+          <motion.path {...line(0.8)} d="M80 420v580M120 420v580M197 340v660M234 340v660M315 520v480M215 340V280M215 280l-18 60M215 280l18 60" />
+        </g>
+
+        {/* Right: tower crane with lattice mast and jib */}
+        <g stroke="rgb(13 15 18 / 0.14)" strokeWidth="1.2">
+          <motion.path {...line(0.2)} d="M1250 1000V170M1282 1000V170M1250 170h32" />
+          <motion.path
+            {...line(0.6, 3)}
+            d="M1250 1000l32-40-32-40 32-40-32-40 32-40-32-40 32-40-32-40 32-40-32-40 32-40-32-40 32-40-32-40 32-40-32-40 32-40-32-40 32-40-32-40 32-30"
+          />
+          <motion.path {...line(1)} d="M960 170h480M960 200h480M960 170l30 30 30-30 30 30 30-30 30 30 30-30 30 30 30-30 30 30 30-30 30 30 30-30 30 30 30-30 30 30M1266 170V90M1266 90L980 170M1266 90l170 80" />
+          <motion.path {...line(1.6, 1.6)} d="M1080 200v190M1060 390h40v34h-40z" />
+        </g>
+        <g stroke="rgb(21 97 192 / 0.22)" strokeWidth="1.4">
+          <motion.path {...line(1.8, 1.6)} d="M1060 424l-24 40M1100 424l24 40M1036 464h88" />
+        </g>
+
+        {/* Bottom centre: roof truss / pipe rack */}
+        <g stroke="rgb(13 15 18 / 0.1)" strokeWidth="1.2">
+          <motion.path {...line(0.3)} d="M440 1000V860h520v140M440 860l260-90 260 90" />
+          <motion.path {...line(0.9, 2.8)} d="M440 860l65 140 65-140 65 140 65-140 65 140 65-140 65 140 65-140M505 838v22M570 815v45M635 793v67M700 770v90M765 793v67M830 815v45M895 838v22" />
+        </g>
+
+        {/* Isometric blocks */}
+        <g stroke="rgb(13 15 18 / 0.12)" strokeWidth="1.2">
+          <motion.path {...line(0.5)} d="M620 120l80-46 80 46-80 46zM620 120v92l80 46 80-46v-92M700 166v92" />
+          <motion.path {...line(1.1)} d="M520 300l50-29 50 29-50 29zM520 300v58l50 29 50-29v-58M570 329v58" />
+        </g>
+        <g stroke="rgb(217 24 66 / 0.18)" strokeWidth="1.2">
+          <motion.path {...line(1.4)} d="M860 70l40-23 40 23-40 23zM860 70v46l40 23 40-23V70M900 93v46" />
+        </g>
+
+        {/* Dimension marks and site datum */}
+        <g stroke="rgb(13 15 18 / 0.16)" strokeWidth="1">
+          <motion.path {...line(1.2, 1.8)} d="M40 395h320M40 388v14M360 388v14M1210 170v830M1203 170h14M1203 1000h14" />
+          <motion.circle {...line(1.5, 1.6)} cx="1120" cy="620" r="46" />
+          <motion.path {...line(1.7, 1.2)} d="M1060 620h120M1120 560v120" />
+        </g>
+      </svg>
+    </div>
   );
 }
 

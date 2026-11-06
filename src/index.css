@@ -3,6 +3,7 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/instrument-sans";
 @import "@fontsource/tenor-sans";
+@import "@fontsource-variable/geist";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -10,6 +11,7 @@
     --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
     --font-heading: 'Tenor Sans', ui-serif, Georgia, serif;
     --font-display: 'Tenor Sans', ui-serif, Georgia, serif;
+    --font-logo: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
     --color-ink: var(--ink);
     --color-ink-soft: var(--ink-soft);
     --color-paper: var(--paper);
@@ -124,7 +126,9 @@
     .rich-text :where(h1, h2, h3, h4):first-child { @apply mt-0; }
     .rich-text :where(strong, b) { @apply font-semibold text-foreground; }
     .rich-text :where(a) { @apply text-brand underline decoration-brand/40 underline-offset-4 hover:decoration-brand; }
-    .rich-text :where(p) { @apply my-4 whitespace-normal; }
+    .rich-text :where(p) { @apply my-4 whitespace-normal text-justify; }
+    .rich-text :where(li) { @apply text-justify; }
+    .text-justified { @apply text-justify; }
     .rich-text :where(p:empty) { @apply hidden; }
     .rich-text :where(ul, ol) { @apply my-5 space-y-2 pl-6; }
     .rich-text :where(li)::marker { color: var(--brand); }

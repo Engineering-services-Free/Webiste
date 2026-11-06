@@ -18,17 +18,36 @@ export function CtaBand() {
     <section className="relative isolate overflow-hidden bg-brand text-white">
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.18),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(13,15,18,0.45),transparent_60%)]" />
       <GridLines />
-      <div className="container-site grid gap-10 py-20 sm:py-28 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+      <div className="container-site grid gap-10 py-20 sm:py-24 lg:grid-cols-2 lg:items-center lg:gap-16">
         <Reveal>
           <span className="eyebrow text-white/70">Start a project</span>
           <h2 className="display mt-5 text-4xl sm:text-5xl lg:text-6xl">
             Have an industrial project in planning?
           </h2>
         </Reveal>
-        <Reveal delay={0.15} className="flex flex-col gap-6 lg:items-end">
-          <p className="max-w-md text-lg leading-8 text-white/80 lg:text-right">
+        <Reveal
+          delay={0.15}
+          className="flex flex-col gap-7 rounded-md border border-white/20 bg-white/[0.08] p-7 backdrop-blur-sm sm:p-10"
+        >
+          <p className="text-justified text-lg leading-8 text-white/85 sm:text-xl sm:leading-9">
             Share your scope, drawings or site requirements and our engineering team will get back with a practical plan.
           </p>
+          {contact && (
+            <div className="flex flex-wrap gap-x-10 gap-y-4 border-y border-white/15 py-6 text-white/85">
+              <a href={telHref(contact.contactNumber1)} className="flex items-center gap-3 transition hover:text-white">
+                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white/15">
+                  <Phone className="size-4" />
+                </span>
+                {formatPhone(contact.contactNumber1)}
+              </a>
+              <a href={`mailto:${contact.email}`} className="flex min-w-0 items-center gap-3 transition hover:text-white">
+                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white/15">
+                  <Mail className="size-4" />
+                </span>
+                <span className="break-words">{contact.email}</span>
+              </a>
+            </div>
+          )}
           <div className="flex flex-wrap gap-3">
             <ButtonLink to="/contact" tone="light">
               Request a quote
@@ -61,7 +80,7 @@ export function SiteFooter() {
       <div className="container-site grid gap-14 pb-12 pt-20 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
         <div>
           <BrandMark />
-          <p className="mt-6 max-w-sm leading-7 text-white/60">
+          <p className="text-justified mt-6 max-w-sm leading-7 text-white/60">
             Design and engineering, steel fabrication, structural erection, piping, mechanical and electrical works for industrial and infrastructure projects across India.
           </p>
           {contact?.socialMedia && contact.socialMedia.length > 0 && (

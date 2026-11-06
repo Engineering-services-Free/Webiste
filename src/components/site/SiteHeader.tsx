@@ -15,12 +15,12 @@ import { lockScroll } from "@/lib/scroll";
 export function BrandMark({ className }: { className?: string }) {
   return (
     <Link to="/" className={cn("flex items-center gap-3", className)} aria-label="Muthammal Engineering Services home">
-      <span className="grid size-11 place-items-center rounded-full bg-white p-1.5 shadow-sm">
+      <span className="grid size-12 shrink-0 place-items-center rounded-full bg-white p-1.5 shadow-sm sm:size-14">
         <img src="/Logo.png" alt="" className="h-full w-full object-contain" />
       </span>
-      <span className="font-display text-[0.95rem] uppercase leading-tight tracking-[0.08em]">
+      <span className="font-logo text-[1.05rem] font-extrabold uppercase leading-none tracking-[0.06em] sm:text-[1.2rem]">
         Muthammal
-        <span className="block text-[0.62rem] tracking-[0.3em] opacity-70">
+        <span className="mt-1.5 block text-[0.6rem] font-semibold tracking-[0.24em] opacity-80 sm:text-[0.66rem]">
           Engineering Services
         </span>
       </span>
@@ -62,7 +62,7 @@ export function SiteHeader() {
             : "border-b border-transparent bg-transparent",
         )}
       >
-        <div className="container-site flex h-20 items-center justify-between gap-6">
+        <div className="container-site flex h-20 items-center justify-between gap-6 sm:h-24">
           <BrandMark />
 
           <nav aria-label="Main navigation" className="hidden items-center gap-1 xl:flex">
@@ -73,7 +73,7 @@ export function SiteHeader() {
                 end={link.to === "/"}
                 className={({ isActive }) =>
                   cn(
-                    "group relative px-3.5 py-2 text-[0.78rem] font-medium uppercase tracking-[0.14em] transition-colors",
+                    "group relative px-3 py-2 text-[0.84rem] font-medium uppercase tracking-[0.12em] transition-colors 2xl:px-4",
                     isActive ? "text-white" : "text-white/65 hover:text-white",
                   )
                 }
@@ -94,7 +94,7 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <ButtonLink to="/contact" tone="light" className="hidden h-11 sm:inline-flex">
+            <ButtonLink to="/contact" tone="light" className="hidden h-12 sm:inline-flex">
               Contact us
             </ButtonLink>
             <button

@@ -82,11 +82,14 @@ export function ProjectDetailsPage() {
 
       {/* Fact strip */}
       <section className="border-b border-ink/10 bg-white">
-        <Stagger className="container-site grid grid-cols-2 gap-px md:grid-cols-3 lg:grid-cols-5" gap={0.06}>
+        <Stagger className="container-site grid grid-cols-2 gap-px md:grid-cols-4 lg:grid-cols-6" gap={0.06}>
           {facts.map((fact) => (
-            <StaggerItem key={fact.label} className="py-8 pr-6">
+            <StaggerItem
+              key={fact.label}
+              className={cn("py-8 pr-6", fact.label === "Industry" && "col-span-2")}
+            >
               <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">{fact.label}</p>
-              <p className="mt-2 font-display text-lg uppercase text-ink">{fact.value}</p>
+              <p className="mt-2 text-balance font-display text-lg uppercase text-ink">{fact.value}</p>
             </StaggerItem>
           ))}
         </Stagger>
@@ -254,28 +257,34 @@ function Gallery({ images, title }: { images: ProjectImage[]; title: string }) {
     <section className="bg-white py-24 sm:py-32">
       <div className="container-site">
         <SectionHeading eyebrow={`Gallery · ${images.length} photos`} title="From the fabrication yard to site" />
-        <Stagger className="mt-16 columns-1 gap-4 sm:columns-2 lg:columns-3" gap={0.05}>
+        <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((image, index) => (
-            <StaggerItem key={`${image.url}-${index}`} className="mb-4 break-inside-avoid">
+            <motion.div
+              key={`${image.url}-${index}`}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "0px 0px -5% 0px" }}
+              transition={{ duration: 0.7, ease: EASE, delay: (index % 3) * 0.06 }}
+            >
               <button
                 type="button"
                 onClick={() => setActive(index)}
                 data-cursor="Zoom"
-                className="group relative block w-full overflow-hidden rounded-md bg-ink"
+                className="group relative block aspect-[4/3] w-full overflow-hidden rounded-md bg-ink"
                 aria-label={`Open photo ${index + 1} of ${images.length}`}
               >
                 <SmartImage
                   src={image.url}
                   alt={image.alt || title}
-                  className="w-full transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+                  className="h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
                 />
                 <span className="absolute inset-0 grid place-items-center bg-ink/0 opacity-0 transition duration-500 group-hover:bg-ink/35 group-hover:opacity-100">
                   <Expand className="size-7 text-white" />
                 </span>
               </button>
-            </StaggerItem>
+            </motion.div>
           ))}
-        </Stagger>
+        </div>
         {images.length > GALLERY_PREVIEW && (
           <div className="mt-12 flex justify-center">
             <button

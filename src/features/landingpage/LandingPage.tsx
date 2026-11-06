@@ -21,6 +21,7 @@ import {
   StaggerItem,
 } from "@/components/site/motion";
 import {
+  BuildingGeometry,
   ButtonLink,
   EmptyState,
   GridLines,
@@ -199,7 +200,9 @@ export function LandingPage() {
       </section>
 
       {/* Projects */}
-      <section className="container-site py-24 sm:py-32">
+      <section className="relative isolate overflow-hidden border-y border-ink/10 bg-white">
+        <BuildingGeometry />
+        <div className="container-site py-24 sm:py-32">
         <SectionHeading
           eyebrow="Featured work"
           title="Recent projects from the field"
@@ -218,6 +221,7 @@ export function LandingPage() {
             <EmptyState message="Projects will be published soon." />
           </div>
         )}
+        </div>
       </section>
 
       {/* Clients */}
